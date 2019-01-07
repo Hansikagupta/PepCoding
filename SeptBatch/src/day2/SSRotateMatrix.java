@@ -8,7 +8,6 @@ public class SSRotateMatrix {
 		System.out.println();
 		rotate90(mat);
 		display(mat);
-
 	}
 
 	private static void rotate90(int[][] mat) {

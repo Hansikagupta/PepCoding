@@ -12,13 +12,13 @@ public class DPFibonacci {
 //				{ 3, 9, 11, 2, 1, 3 }, { 8, 0, 4, 4, 6, 9 }, { 1, 0, 0, 9, 6, 2 }
 //
 //		};
-
+//
 		int[][] arr = { { 2, 5, 0, 8, 7 }, { 3, 6, 0, 3, 2 }, { 0, 4, 7, 7, 9 }, { 1, 8, 0, 0, 10 }, { 5, 3, 2, 0, 0 }
 
 		};
 
 		long start = System.currentTimeMillis();
-
+		//System.out.println(countBoardPathTab(0, 10, new int[11]));
 		goldMine(arr);
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
@@ -98,7 +98,8 @@ public class DPFibonacci {
 					arr[r][c] = mine[r][c];
 				else {
 					if ((r < arr.length - 1) && (r > 0))
-						arr[r][c] = Math.max(arr[r][c + 1], Math.max(arr[r - 1][c + 1], arr[r + 1][c + 1])) + mine[r][c];
+						arr[r][c] = Math.max(arr[r][c + 1], Math.max(arr[r - 1][c + 1], arr[r + 1][c + 1]))
+								+ mine[r][c];
 					else if (r < arr.length - 1)
 						arr[r][c] = Math.max(arr[r][c + 1], arr[r + 1][c + 1]) + mine[r][c];
 					else if (r > 0)
@@ -139,20 +140,17 @@ public class DPFibonacci {
 	}
 
 	private static int countBoardPathTab(int s, int d, int[] arr) {// Pending
-		if (s == d) {
-			arr[d] = 1;
-			return 1;
-		}
-		for(int q = d; q >= 0; q--)
-		int maxDiceMove = (d - s > 6) ? 6 : (d - s);
-		int pathSum = 0;
-		int paths;
-		for (int dice = 1; dice <= maxDiceMove; dice++) {
-			paths = arr[s + dice];
-			pathSum += paths;
-		}
 
-		arr[s] = pathSum;
-		return pathSum;
+		arr[d] = 1;
+
+		for (int q = d-1; q >= 0; q--) {
+			int maxDiceMove = (d - q > 6) ? 6 : (d - q);
+			int pathSum = 0;
+			for (int dice = 1; dice <= maxDiceMove; dice++) {
+				pathSum += arr[q + dice];
+			}
+			arr[q] = pathSum;
+		}
+		return arr[0];
 	}
 }
